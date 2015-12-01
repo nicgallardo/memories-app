@@ -3,7 +3,7 @@ var app = angular.module("memoriesApp", ['ngRoute'])
   })
 
   app.controller("YearController", function($scope, $http, $route, $routeParams, $location){
-    $http.get('http://localhost:3000/api/v1/memories/' + $routeParams.year).then(function(response){
+    $http.get('http://galvanize-service-registry.cfapps.io/api/v1/g12/kids-these-days/' + $routeParams.year).then(function(response){
       $scope.thisYear = response.data.rows;
       $scope.yearMsg = $routeParams.year;
       console.log("response", $scope.thisYear);
@@ -13,12 +13,12 @@ var app = angular.module("memoriesApp", ['ngRoute'])
 
   app.controller("YearsController", function($scope, $http, $route, $routeParams, $location){
 
-    $http.get('http://localhost:3000/api/v1/memories/').then(function(response){
+    $http.get('http://galvanize-service-registry.cfapps.io/api/v1/g12/kids-these-days').then(function(response){
       $scope.data = response;
       console.log('test');
     })
 
-    $http.get('http://localhost:3000/api/v1/memories/years').then(function(response){
+    $http.get('http://galvanize-service-registry.cfapps.io/api/v1/g12/kids-these-days/years').then(function(response){
       $scope.year = response.data;
       console.log("test");
       console.log("response", $scope.year);
@@ -36,7 +36,7 @@ var app = angular.module("memoriesApp", ['ngRoute'])
             }
           }
 
-      $http.post('http://localhost:3000/api/v1/memories', $scope.obj);
+      $http.post('http://galvanize-service-registry.cfapps.io/api/v1/g12/kids-these-days/memories', $scope.obj);
       $scope.post = {};
     }
 
@@ -52,5 +52,6 @@ var app = angular.module("memoriesApp", ['ngRoute'])
         templateUrl: 'partials/years.html',
         controller: 'YearsController',
       })
+      .otherwise({redirectTo:'/'});
     $locationProvider.html5Mode(true)
   })
